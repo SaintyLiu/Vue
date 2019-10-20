@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css ">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th v-for="item in tableHeaderData" v-if="item.isShown">{{ item.name }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in tableData">
+                        <td v-for="field in tableHeaderData" v-if="field.isShown">{{ item[field.fieldName] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello,world!',
+            tableHeaderData:[],
+            tableData: []
+        },
+        created: function() {
+            //发起一个Ajax请求获取到数据表格列信息
+            this.tableHeaderData = [
+            {name: '姓名',fieldName: 'name',isShown: true},
+            {name: '性别',fieldName: 'sex',isShown: true},
+            {name: '出生日期',fieldName: 'birthday',isShown: true},
+            {name: '地址',fieldName: 'address',isShown: true},
+            {name: '手机号码',fieldName: 'mobilePhone',isShown: true},
+            ];
+            //发起一个Ajax的请求到后台获取数据
+            this.tableData = [
+            {name: "张三",sex: "男",birthday: '1993-03-08',address: '江苏省常州市武进区',mobilePhone: '13675129210'},
+            {name: "李四",sex: "女",birthday: '1996-08-13',address: '江苏省常州市钟楼区',mobilePhone: '13951708573'},
+            {name: "张三",sex: "男",birthday: '1993-03-08',address: '江苏省常州市武进区',mobilePhone: '13675129210'},
+            {name: "李四",sex: "女",birthday: '1996-08-13',address: '江苏省常州市钟楼区',mobilePhone: '13951708573'},
+            {name: "李四",sex: "女",birthday: '1996-08-13',address: '江苏省常州市钟楼区',mobilePhone: '13951708573'},
+            {name: "李四",sex: "女",birthday: '1996-08-13',address: '江苏省常州市钟楼区',mobilePhone: '13951708573'},
+            ];
+        },
+    })
+</script>
+</html>
