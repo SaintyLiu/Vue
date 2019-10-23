@@ -11,37 +11,49 @@
     <div class="container" id="app">
         <div class="row">
             <div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#custom-table-modal">
                     Launch demo modal
                 </button>
             </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th v-for="item in tableHeaderData" v-if="item.isShown">{{ item.name }}</th>
+                        <th v-for="item in tableHeaderData" v-if="item.isShown =='true'">{{ item.name }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in tableData">
-                        <td v-for="field in tableHeaderData" v-if="field.isShown">{{ item[field.fieldName] }}</td>
+                        <td v-for="field in tableHeaderData" v-if="field.isShown =='true'">{{ item[field.fieldName] }}</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="custom-table-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">自定义表格</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        ...
+                    <div class = "modal-body">
+                        <div class = "row">
+                            <div class = "col-6" v-for = "field in tableHeaderData">
+                                <div class = "form-group">
+                                    <label class="col-md-4 control-label">{{ field.name }}</label>
+                                    <div class="col-md-8">
+                                        <div class="checkbox">
+                                            <input v-bind:name = "field.fieldName + '-radio-table'" v-model="field.isShown" type = "radio" value = "true"/>显示
+                                            <input v-bind:name = "field.fieldName + '-radio-table'" v-model="field.isShown" type = "radio" value = "false"/>隐藏
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" v-on:click="changeTableHeader">保存</button>
                     </div>
                     </div>
                 </div>
@@ -60,14 +72,20 @@
             tableHeaderData:[],
             tableData: []
         },
+        methods: {
+            changeTableHeader:function(){
+                console.log(this.tableHeaderData);
+                //将最新的数据通过Ajax的方式调用后台借口实现数据保存
+            }
+        },
         created: function() {
             //发起一个Ajax请求获取到数据表格列信息
             this.tableHeaderData = [
-            {name: '姓名',fieldName: 'name',isShown: true},
-            {name: '性别',fieldName: 'sex',isShown: true},
-            {name: '出生日期',fieldName: 'birthday',isShown: true},
-            {name: '地址',fieldName: 'address',isShown: true},
-            {name: '手机号码',fieldName: 'mobilePhone',isShown: true},
+            {name: '姓名',fieldName: 'name',isShown: "true"},
+            {name: '性别',fieldName: 'sex',isShown: "true"},
+            {name: '出生日期',fieldName: 'birthday',isShown: "true"},
+            {name: '地址',fieldName: 'address',isShown: "true"},
+            {name: '手机号码',fieldName: 'mobilePhone',isShown: "false"},
             ];
             //发起一个Ajax的请求到后台获取数据
             this.tableData = [
