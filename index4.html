@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input v-model="message" placeholder="edit me" v-model="message">
+        <p>Message is :{{ message }}</p>
+        <div>
+            <select name="" id="" v-model="selectedValue">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+            <p>selectedValue is :{{ selectedValue }}</p>
+        </div>
+        <div>
+            <input v-model="radioValue" type="radio" name="radio-widget" value="男" />男
+            <input v-model="radioValue" type="radio" name="radio-widget" value="女" />女
+            <p>radioValue is :{{ radioValue }}</p>
+        </div>
+        <div>
+            <input v-model="checkboxValue" type="checkbox" name="checkbox-widget" value="语文">语文
+            <input v-model="checkboxValue" type="checkbox" name="checkbox-widget" value="数学">数学
+            <input v-model="checkboxValue" type="checkbox" name="checkbox-widget" value="英语">英语
+            <p>checkboxValue is :{{ checkboxValue }}</p>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th><input v-on:change="selectAll" v-bind:checked="checkAll" type="checkbox" name="checkbox-all"></th>
+                        <th>性别</th>
+                        <th>姓名</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><input v-model="selectedId" type="checkbox" name="checkbox-list" value="1"></th>
+                        <th>张三</th>
+                        <th>男</th>
+                    </tr>
+                    <tr>
+                        <th><input v-model="selectedId" type="checkbox" name="checkbox-list" value="2"></th>
+                        <th>李四</th>
+                        <th>女</th>
+                    </tr>
+                    <tr>
+                        <th><input v-model="selectedId" type="checkbox" name="checkbox-list" value="3"></th>
+                        <th>王五</th>
+                        <th>男</th>                        
+                    </tr>
+                    <tr>
+                        <th><input v-model="selectedId" type="checkbox" name="checkbox-list" value="4"></th>
+                        <th>刘六</th>
+                        <th>男</th>                        
+                    </tr> 
+                    <tr>
+                        <th><input v-model="selectedId" type="checkbox" name="checkbox-list" value="5"></th>
+                        <th>赵七</th>
+                        <th>女</th>                        
+                    </tr> 
+                </tbody>
+            </table>
+            <p>selectedId is :{{ selectedId }}</p>
+        </div>
+    </div>
+</body>
+<script src="./node_modules/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            message: "hello,Vue",
+            selectedValue: "",
+            radioValue: "女",
+            checkboxValue:[],
+            selectedId: []
+        },
+        computed: {
+            checkAll: function(){
+                if(this.selectedId.length == 5){
+                    return true;
+                }
+                return false;
+            }
+        },
+        methods: {
+            selectAll: function(){
+                if(this.checkAll){
+                    this.selectedId =[];
+                } else {
+                    this.selectedId = ['1','2','3','4','5']
+                }
+            }
+        },
+    })
+</script>
+</html>
